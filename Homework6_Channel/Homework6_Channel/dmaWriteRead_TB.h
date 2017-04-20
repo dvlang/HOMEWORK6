@@ -24,6 +24,9 @@ SC_MODULE (dmaWriteRead_TB) {
 			MEM1->address_p(address_s);
 			MEM1->data_p(data_s);
 			MEM1->rw_p(rw_s);
+
+			cout << "hi dan" << endl;
+			
 	}
 	//void monitor 
 };
