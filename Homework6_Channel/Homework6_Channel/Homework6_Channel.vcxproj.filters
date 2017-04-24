@@ -15,21 +15,39 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="handshake\handshaking.h">
+    <ClInclude Include="memory.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="handshake\handshaking_TB.h">
+    <ClInclude Include="interfaceClasses.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="dmaWriteRead_TB.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="dmaChannel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="dmaWriteRead.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="handshake\handshaking.cpp">
+    <ClCompile Include="memory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="handshake\handshaking_Main.cpp">
+    <ClCompile Include="interfceClasses.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="handshake\handshaking_TB.cpp">
+    <ClCompile Include="dmaWriteRead_TB.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="dmaWriteRead_Main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="dmaChannel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="dmaWriteRead.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

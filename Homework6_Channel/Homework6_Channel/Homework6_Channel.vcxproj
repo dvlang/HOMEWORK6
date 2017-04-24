@@ -19,13 +19,19 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="handshake\handshaking.h" />
-    <ClInclude Include="handshake\handshaking_TB.h" />
+    <ClInclude Include="dmaChannel.h" />
+    <ClInclude Include="dmaWriteRead.h" />
+    <ClInclude Include="dmaWriteRead_TB.h" />
+    <ClInclude Include="interfaceClasses.h" />
+    <ClInclude Include="memory.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="handshake\handshaking.cpp" />
-    <ClCompile Include="handshake\handshaking_Main.cpp" />
-    <ClCompile Include="handshake\handshaking_TB.cpp" />
+    <ClCompile Include="dmaChannel.cpp" />
+    <ClCompile Include="dmaWriteRead.cpp" />
+    <ClCompile Include="dmaWriteRead_Main.cpp" />
+    <ClCompile Include="dmaWriteRead_TB.cpp" />
+    <ClCompile Include="interfceClasses.cpp" />
+    <ClCompile Include="memory.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{361ea33d-c961-421a-a055-f5c1c3e15abe}</ProjectGuid>
