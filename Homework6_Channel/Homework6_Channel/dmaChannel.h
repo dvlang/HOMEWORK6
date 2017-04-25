@@ -5,13 +5,14 @@ class dma : public sc_channel, public dma_write_if, public dma_read_if, public d
 public:
 	sc_out_rv<16> address_p;
 	sc_inout_rv<8> data_p;
+
 	//NEW
-	sc_inout_rv<8> data_p2;
-	sc_inout_rv<8> data_p3;
-	sc_inout_rv<8> data_p4;
-	sc_inout_rv<8> data_p5;
+	//sc_inout_rv<8> data_p2;
+	//sc_inout_rv<8> data_p3;
+	//sc_inout_rv<8> data_p4;
+	//sc_inout_rv<8> data_p5;
 	sc_out_resolved gnt1, gnt2, gnt3, gnt4, gnt5;
-	//sc_in_resolved req1, 
+	sc_in_resolved req1;
 	sc_in_resolved req2, req3, req4, req5;
 	//END NEW
 

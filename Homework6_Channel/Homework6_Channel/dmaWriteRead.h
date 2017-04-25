@@ -3,7 +3,11 @@
 SC_MODULE (transmitter) {
 	sc_port<dma_write_if> out; // with if out is a pointer
 	sc_in_resolved gnt;
+	sc_out_resolved request;
+
 	sc_port<dma_arb_if> req;
+
+
 	//sc_out_resolved req;
 
 	SC_CTOR (transmitter)
