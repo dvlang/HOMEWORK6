@@ -14,18 +14,20 @@ void transmitter::writeBlocks()
 
 	//for(i=0; i<=1; i++) {	//this loop looks like it will control how many times this will run set i (orig 3)
 		while(true){
-		cout << "Device: " << device << " at " << sc_time_stamp() << " is idle ...\n";
-		cout << "Device: " << device << " delay " << delay << endl;
+		//cout << "Device: " << device << " at " << sc_time_stamp() << " is idle ...\n";
+		//cout << "Device: " << device << " delay " << delay << endl;
 		wait(delay * 30, SC_NS);
-		cout << "Device: " << device << " at " << sc_time_stamp() << " has requested ...\n";
+		cout << "Trans: Device " << device<< endl;
+		//cout << "Device: " << device << " at " << sc_time_stamp() << " has requested ...\n";
 		//fills buffer with rando data
 		//start=100*(i+1);
 		start = 100;
 		//count=12+i*2;
 		if (done) {
+			done = false;
 			srand(device*(unsigned)time(NULL));
 			count = 1 + (rand() % 128);
-			cout << "count is " << count << endl;
+			cout << "trans: count updatelp; Device " << device << " count is " << count << endl;
 			for (j = 0; j < count; j++) {
 				data[j] = start * 100 + j;
 			}
@@ -38,29 +40,29 @@ void transmitter::writeBlocks()
 			request->write(SC_LOGIC_1);
 			wait(1, SC_NS);
 
-
+		}
 			//req->arbiter(name, count);
 			req->arbiter(device, count);
-
-			cout << "trans_wb: " << name << " Sent a request at " << sc_time_stamp() << endl;
 			wait(1, SC_NS);
-		}
+			cout << "trans_wb: " << device << " Sent a request at " << sc_time_stamp() << endl;
+			wait(1, SC_NS);
+		//}
 		
 		if (gnt->read() == SC_LOGIC_1) {
-			cout << "trans_wb: " << name << " Got a GRANT!" << endl;
+			cout << "trans_wb: " << device << " Got a GRANT!" << endl;
 			out->burstWrite(start, count, data);
-			//wait(70 * count, SC_NS);
-			cout << "TRANS: return from BURSTWRITE" << endl;
-		//	while(true){};
-			cout << "TRANS: At " << sc_time_stamp() << " write start at: "
+
+			cout << "trans_wb: " << device << "Return from BURSTWRITE" << endl;
+
+			/*cout << "TRANS: At " << sc_time_stamp() << " write start at: "
 				<< start << " count " << count << ", first data: "
-				<< data[0] << '\n';
+				<< data[0] << '\n';*/
 		
-			wait(13, SC_NS);
+			wait(1, SC_NS);
 			done = true;
 			request->write(SC_LOGIC_0);
 			wait(1, SC_NS);
-			req->arbiter(device, count);	//sending count shouldnt matter, just need to kick the arb
+ 			req->arbiter(device, count);	//sending count shouldnt matter, just need to kick the arb
 			wait(1, SC_NS);
 		//	while (true) {};
 		}
@@ -70,7 +72,7 @@ void transmitter::writeBlocks()
 
 void receiver::readBlocks()
 {
-	int i, j = 0;
+/*	int i, j = 0;
 	int start, count;
 	sc_lv<8> data[128];
 	for(i=0; i<=1; i++) {	//this loop looks like it will control how many times this will run set i (orig 3)
@@ -82,6 +84,6 @@ void receiver::readBlocks()
 			 << start << " count " << count << ", first data: " 
 			 << data[0] << '\n';
 		wait(13, SC_NS);
-	}
+	}*/
 }
 

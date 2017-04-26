@@ -16,6 +16,7 @@ SC_MODULE (transmitter) {
 	transmitter::transmitter(sc_module_name NAME, int NUM, int TIM) : sc_module(NAME), device(NUM), delay(TIM)
 	{
 		SC_THREAD(writeBlocks);
+		sensitive << request;
 	}
 	void writeBlocks();
 
