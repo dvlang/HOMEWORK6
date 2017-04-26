@@ -40,31 +40,31 @@ SC_MODULE (dmaWriteRead_TB) {
 			DMA1->req5(req5);
 			//END NEW
 			DMA1->rw_p(rw_s);
-		TRS1 = new transmitter("T1");
+		TRS1 = new transmitter("T1",1,1);
 			TRS1->out(*DMA1);
 			TRS1->req(*DMA1);
 			TRS1->gnt(gnt1);
 			TRS1->request(req1);
 
-		TRS2 = new transmitter("T2");
+		TRS2 = new transmitter("T2",2,4);
 			TRS2->out(*DMA1);
 			TRS2->req(*DMA1);
 			TRS2->gnt(gnt2);
 			TRS2->request(req2);
 
-		TRS3 = new transmitter("T3");
+		TRS3 = new transmitter("T3",3,5);
 			TRS3->out(*DMA1);
 			TRS3->req(*DMA1);
 			TRS3->gnt(gnt3);
 			TRS3->request(req3);
 
-		TRS4 = new transmitter("T4");
+		TRS4 = new transmitter("T4",4,11);
 			TRS4->out(*DMA1);
 			TRS4->req(*DMA1);
 			TRS4->gnt(gnt4);
 			TRS4->request(req4);
 			
-		TRS5 = new transmitter("T5");
+		TRS5 = new transmitter("T5",5,14);
 			TRS5->out(*DMA1);
 			TRS5->req(*DMA1);
 			TRS5->gnt(gnt5);

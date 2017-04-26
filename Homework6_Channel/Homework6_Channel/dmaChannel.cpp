@@ -19,6 +19,8 @@ void dma::burstWrite( int dstAddr, int count, sc_lv<8> *data ) {
 
 		wait(10, SC_NS);
 	}
+
+
 }
 
 void dma::burstRead(int srcAddr, int count, sc_lv<8>* data) {
@@ -44,7 +46,7 @@ void dma::burstRead(int srcAddr, int count, sc_lv<8>* data) {
 void dma::arbiter(const char * name, int count) {
 	
 	int i = 0;
-	int countarray[5] = {0,0,0,0,0};
+	int countarray[5] = {128,128,128,128,128};
 
 
 	//while (true) {
@@ -84,7 +86,7 @@ void dma::arbiter(const char * name, int count) {
 		}
 		if (req5->read() == SC_LOGIC_1) {
 			cout << "ARB: Request 5 :" << count << endl;
-			countarray[4] = 2;	//forced set for test
+			countarray[4] = count;	//forced set for test
 		}
 		//gnt1->write(SC_LOGIC_1);
 		
@@ -98,51 +100,51 @@ void dma::arbiter(const char * name, int count) {
 		for (int i = 1; i < sizeof(countarray) / sizeof(countarray[0]); ++i) {
 			if (countarray[i] < smallest) {
 				smallest = countarray[i];
-				location = i+1;
+				location = i;
 			}
 		}
-		cout << "smallest value " << smallest << " at location " << location-1 << " is req # " << location << endl;
+		cout << "smallest value " << smallest << " at location " << location << " is req # " << location+1 << endl;
 
 		switch (location) {
-		case 1:
+		case 0:
 			gnt1->write(SC_LOGIC_1);
 			gnt2->write(SC_LOGIC_0);
 			gnt3->write(SC_LOGIC_0);
 			gnt4->write(SC_LOGIC_0);
 			gnt5->write(SC_LOGIC_0);
-			cout << "GNT " << location << " asserted" << endl;
+			cout << "GNT " << location+1 << " asserted" << endl;
 			break;
-		case 2:
+		case 1:
 			gnt1->write(SC_LOGIC_0);
 			gnt2->write(SC_LOGIC_1);
 			gnt3->write(SC_LOGIC_0);
 			gnt4->write(SC_LOGIC_0);
 			gnt5->write(SC_LOGIC_0);
-			cout << "GNT " << location << " asserted" << endl;
+			cout << "GNT " << location+1 << " asserted" << endl;
 			break;
-		case 3:
+		case 2:
 			gnt1->write(SC_LOGIC_0);
 			gnt2->write(SC_LOGIC_0);
 			gnt3->write(SC_LOGIC_1);
 			gnt4->write(SC_LOGIC_0);
 			gnt5->write(SC_LOGIC_0); 
-			cout << "GNT " << location << " asserted" << endl;
+			cout << "GNT " << location+1 << " asserted" << endl;
 			break;
-		case 4:
+		case 3:
 			gnt1->write(SC_LOGIC_0);
 			gnt2->write(SC_LOGIC_0);
 			gnt3->write(SC_LOGIC_0);
 			gnt4->write(SC_LOGIC_1);
 			gnt5->write(SC_LOGIC_0);
-			cout << "GNT " << location << " asserted" << endl;
+			cout << "GNT " << location+1 << " asserted" << endl;
 			break;
-		case 5:
+		case 4:
 			gnt1->write(SC_LOGIC_0);
 			gnt2->write(SC_LOGIC_0);
 			gnt3->write(SC_LOGIC_0);
 			gnt4->write(SC_LOGIC_0);
 			gnt5->write(SC_LOGIC_1);
-			cout << "GNT " << location << " asserted" << endl;
+			cout << "GNT " << location+1 << " asserted" << endl;
 			break;
 		default:
 			cout << "req selection error" << endl;
@@ -151,7 +153,7 @@ void dma::arbiter(const char * name, int count) {
 		
 
 		//i++;
-	//	}
+		//}
 		
 	
 

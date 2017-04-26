@@ -10,11 +10,18 @@ SC_MODULE (transmitter) {
 
 	//sc_out_resolved req;
 
-	SC_CTOR (transmitter)
+	//SC_CTOR (transmitter)
+	SC_HAS_PROCESS(transmitter);
+
+	transmitter::transmitter(sc_module_name NAME, int NUM, int TIM) : sc_module(NAME), device(NUM), delay(TIM)
 	{
 		SC_THREAD(writeBlocks);
 	}
 	void writeBlocks();
+
+	private:
+		int device;
+		int delay;
 };
 
 SC_MODULE (receiver) {
