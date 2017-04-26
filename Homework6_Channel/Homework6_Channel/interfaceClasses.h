@@ -15,5 +15,7 @@ class dma_read_if: virtual public sc_interface
 class dma_arb_if : virtual public sc_interface
 {
 public:
-	virtual void arbiter(const char * name, int count) = 0;
+	//virtual void arbiter(const char * name, int count) = 0;
+	virtual void arbiter(int name, int count) = 0;
+
 };

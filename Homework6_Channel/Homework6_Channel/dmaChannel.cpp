@@ -44,11 +44,12 @@ void dma::burstRead(int srcAddr, int count, sc_lv<8>* data) {
    }
 }
 
-void dma::arbiter(const char * name, int count) {
-	
-	int i = 0;
-	int countarray[5] = {128,128,128,128,128};
-
+//void dma::arbiter(const char * name, int count) {
+void dma::arbiter(int name, int count) {
+	//int i = 0;
+	//int countarray[5] = {128,128,128,128,128};
+//	int grant[5] = { 0,0,0,0,0 };
+	int grant = 0;
 
 	//while (true) {
 	//while (i<1){
@@ -68,28 +69,46 @@ void dma::arbiter(const char * name, int count) {
 		wait();
 	*/
 		cout << "ARB: " << req1->read()<< " " << req2->read() << " " << req3->read() << " " << req4->read() << " " << req5->read() << endl;
-
-		if (req1->read() == SC_LOGIC_1) {
-			cout << "ARB: Request 1 :" << count << endl;
-			countarray[0] = count;
+		
+	/*	if (req1->read() == SC_LOGIC_1) {
+			grant[0] = 1;
 		}
 		if (req2->read() == SC_LOGIC_1) {
-			cout << "ARB: Request 2 :" << count << endl;
-			countarray[1] = count;
+			grant[1] = 1;
 		}
 		if (req3->read() == SC_LOGIC_1) {
-			cout << "ARB: Request 3 :" << count << endl;
-			countarray[2] = count;
+			grant[2] = 1;
 		}
 		if (req4->read() == SC_LOGIC_1) {
-			cout << "ARB: Request 4 :" << count << endl;
-			countarray[3] = count;
+			grant[3] = 1;
 		}
 		if (req5->read() == SC_LOGIC_1) {
-			cout << "ARB: Request 5 :" << count << endl;
-			countarray[4] = count;	//forced set for test
+			grant[4] = 1;
+		}*/
+		
+		switch (name) {
+		case 1:
+			countarray[0] = count;
+			break;
+		case 2:
+			countarray[1] = count;
+			break;
+		case 3:
+			countarray[2] = count;
+			break;
+		case 4:
+			countarray[3] = count;
+			break;
+		case 5:
+			countarray[4] = count;
+			break;
+		default:
+			cout << "req selection error" << endl;
+			break;
+
 		}
-		//gnt1->write(SC_LOGIC_1);
+
+
 		
 		for (int y = 0; y < 5; y++) {
 			cout << "Array location " << y << " is " << countarray[y] << endl;
@@ -105,51 +124,62 @@ void dma::arbiter(const char * name, int count) {
 			}
 		}
 		cout << "smallest value " << smallest << " at location " << location << " is req # " << location+1 << endl;
-
-		switch (location) {
-		case 0:
-			gnt1->write(SC_LOGIC_1);
-			gnt2->write(SC_LOGIC_0);
-			gnt3->write(SC_LOGIC_0);
-			gnt4->write(SC_LOGIC_0);
-			gnt5->write(SC_LOGIC_0);
-			cout << "GNT " << location+1 << " asserted" << endl;
-			break;
-		case 1:
-			gnt1->write(SC_LOGIC_0);
-			gnt2->write(SC_LOGIC_1);
-			gnt3->write(SC_LOGIC_0);
-			gnt4->write(SC_LOGIC_0);
-			gnt5->write(SC_LOGIC_0);
-			cout << "GNT " << location+1 << " asserted" << endl;
-			break;
-		case 2:
-			gnt1->write(SC_LOGIC_0);
-			gnt2->write(SC_LOGIC_0);
-			gnt3->write(SC_LOGIC_1);
-			gnt4->write(SC_LOGIC_0);
-			gnt5->write(SC_LOGIC_0); 
-			cout << "GNT " << location+1 << " asserted" << endl;
-			break;
-		case 3:
-			gnt1->write(SC_LOGIC_0);
-			gnt2->write(SC_LOGIC_0);
-			gnt3->write(SC_LOGIC_0);
-			gnt4->write(SC_LOGIC_1);
-			gnt5->write(SC_LOGIC_0);
-			cout << "GNT " << location+1 << " asserted" << endl;
-			break;
-		case 4:
-			gnt1->write(SC_LOGIC_0);
-			gnt2->write(SC_LOGIC_0);
-			gnt3->write(SC_LOGIC_0);
-			gnt4->write(SC_LOGIC_0);
-			gnt5->write(SC_LOGIC_1);
-			cout << "GNT " << location+1 << " asserted" << endl;
-			break;
-		default:
-			cout << "req selection error" << endl;
-			break;
+		if (grant==0) {
+			switch (location) {
+			case 0:
+				gnt1->write(SC_LOGIC_1);
+				gnt2->write(SC_LOGIC_0);
+				gnt3->write(SC_LOGIC_0);
+				gnt4->write(SC_LOGIC_0);
+				gnt5->write(SC_LOGIC_0);
+				cout << "GNT " << location + 1 << " asserted" << endl;
+				//grant[0] = 1;
+				break;
+			case 1:
+				gnt1->write(SC_LOGIC_0);
+				gnt2->write(SC_LOGIC_1);
+				gnt3->write(SC_LOGIC_0);
+				gnt4->write(SC_LOGIC_0);
+				gnt5->write(SC_LOGIC_0);
+				cout << "GNT " << location + 1 << " asserted" << endl;
+				//grant = 2;
+				break;
+			case 2:
+				gnt1->write(SC_LOGIC_0);
+				gnt2->write(SC_LOGIC_0);
+				gnt3->write(SC_LOGIC_1);
+				gnt4->write(SC_LOGIC_0);
+				gnt5->write(SC_LOGIC_0);
+				cout << "GNT " << location + 1 << " asserted" << endl;
+				//grant = 3;
+				break;
+			case 3:
+				gnt1->write(SC_LOGIC_0);
+				gnt2->write(SC_LOGIC_0);
+				gnt3->write(SC_LOGIC_0);
+				gnt4->write(SC_LOGIC_1);
+				gnt5->write(SC_LOGIC_0);
+				cout << "GNT " << location + 1 << " asserted" << endl;
+			//	grant = 4;
+				break;
+			case 4:
+				gnt1->write(SC_LOGIC_0);
+				gnt2->write(SC_LOGIC_0);
+				gnt3->write(SC_LOGIC_0);
+				gnt4->write(SC_LOGIC_0);
+				gnt5->write(SC_LOGIC_1);
+				cout << "GNT " << location + 1 << " asserted" << endl;
+				//grant = 5;
+				break;
+			default:
+				gnt1->write(SC_LOGIC_0);
+				gnt2->write(SC_LOGIC_0);
+				gnt3->write(SC_LOGIC_0);
+				gnt4->write(SC_LOGIC_0);
+				gnt5->write(SC_LOGIC_0);
+				//grant = 0;
+				break;
+			}
 		}
 		
 

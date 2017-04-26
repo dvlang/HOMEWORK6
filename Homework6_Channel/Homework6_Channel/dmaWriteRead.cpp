@@ -7,7 +7,7 @@ void transmitter::writeBlocks()
 	const char* name = sc_core::sc_get_current_process_b()->get_parent()->basename();
 	int i, j = 0;
 	int start, count;
-	bool done = false;
+	bool done = true;
 	sc_lv<8> data[128];
 
 	srand(device*(unsigned)time(NULL));
@@ -22,31 +22,35 @@ void transmitter::writeBlocks()
 		//start=100*(i+1);
 		start = 100;
 		//count=12+i*2;
-		srand(device*(unsigned)time(NULL));
-		count = 1+(rand() % 128);
-		cout << "count is " << count << endl;
-		for(j=0; j<count; j++) {
-			data[j]=start*100+j;
-		}
-//		cout << "trans_wb: my name is " << name << endl;
-		srand(device*(unsigned)time(NULL));
-		//rand()%
-		wait(rand()%10, SC_NS);
+		if (done) {
+			srand(device*(unsigned)time(NULL));
+			count = 1 + (rand() % 128);
+			cout << "count is " << count << endl;
+			for (j = 0; j < count; j++) {
+				data[j] = start * 100 + j;
+			}
+			//		cout << "trans_wb: my name is " << name << endl;
+			srand(device*(unsigned)time(NULL));
+			//rand()%
+			wait(rand() % 10, SC_NS);
 
+
+			request->write(SC_LOGIC_1);
+			wait(1, SC_NS);
+
+
+			//req->arbiter(name, count);
+			req->arbiter(device, count);
+
+			cout << "trans_wb: " << name << " Sent a request at " << sc_time_stamp() << endl;
+			wait(1, SC_NS);
+		}
 		
-		request->write(SC_LOGIC_1);
-		wait(1, SC_NS);
-		req->arbiter(name, count);// = SC_LOGIC_1;
-		cout << "trans_wb: " << name << " Sent a request at " << sc_time_stamp() << endl;
-		wait(1, SC_NS);
-		
-		//while (gnt != SC_LOGIC_1) { cout << "trans_wb: " << name << " Watitng " << sc_time_stamp() << " " << endl; };
-		//while (gnt->read() != SC_LOGIC_1) { cout << name << " here" << endl; };
 		if (gnt->read() == SC_LOGIC_1) {
 			cout << "trans_wb: " << name << " Got a GRANT!" << endl;
 			out->burstWrite(start, count, data);
 			//wait(70 * count, SC_NS);
-			cout << "return from BURSTWRITE" << endl;
+			cout << "TRANS: return from BURSTWRITE" << endl;
 			while(true){};
 			cout << "TRANS: At " << sc_time_stamp() << " write start at: "
 				<< start << " count " << count << ", first data: "

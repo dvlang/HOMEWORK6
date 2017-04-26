@@ -24,7 +24,8 @@ public:
 
 	virtual void burstWrite( int dstAddr, int count, sc_lv<8>* data );
 	virtual void burstRead(int srcAddr, int count, sc_lv<8>* data);
-	virtual void arbiter(const char * name, int count);
-	
+	//virtual void arbiter(const char * name, int count);
+	virtual void arbiter(int name, int count);
+	int countarray[5] = { 0,0,0,0,0 };
 	
 };
