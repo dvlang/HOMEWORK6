@@ -49,7 +49,7 @@ void dma::arbiter(int name, int count) {
 	//int i = 0;
 	//int countarray[5] = {128,128,128,128,128};
 //	int grant[5] = { 0,0,0,0,0 };
-	int grant = 0;
+	
 
 	//while (true) {
 	//while (i<1){
@@ -68,39 +68,61 @@ void dma::arbiter(int name, int count) {
 		}
 		wait();
 	*/
-		cout << "ARB: " << req1->read()<< " " << req2->read() << " " << req3->read() << " " << req4->read() << " " << req5->read() << endl;
+		cout << "ARB_req_ary: " << req1->read()<< " " << req2->read() << " " << req3->read() << " " << req4->read() << " " << req5->read() << endl;
+		cout << "ARB_cur_gnt: " << grant << endl;
+
+		//clear the previous transmitter's grant permission
+		if ((req1->read() == SC_LOGIC_0)&&(grant==1)) {
+			grant = 0;
+			reqarray[0] = 0;
+			cout << "clear grant 1" << endl;
+			//while (true) {};
+		}
+		else if ((req2->read() == SC_LOGIC_0) && (grant == 2)) {
+			grant = 0;
+			reqarray[1] = 0;
+			cout << "clear grant 2" << endl;
+		}
+		else if ((req3->read() == SC_LOGIC_0) && (grant == 3)) {
+			grant = 0;
+			reqarray[2] = 0;
+			cout << "clear grant 3" << endl;
+		}
+		else if ((req4->read() == SC_LOGIC_0) && (grant == 4)) {
+			grant = 0;
+			reqarray[3] = 0;
+			cout << "clear grant 4" << endl;
+		}
+		else if ((req5->read() == SC_LOGIC_0) && (grant == 5)) {
+			grant = 0;
+			reqarray[4] = 0;
+			cout << "clear grant 5" << endl;
+		}
+		else {
+			grant = grant;
+		}
 		
-	/*	if (req1->read() == SC_LOGIC_1) {
-			grant[0] = 1;
-		}
-		if (req2->read() == SC_LOGIC_1) {
-			grant[1] = 1;
-		}
-		if (req3->read() == SC_LOGIC_1) {
-			grant[2] = 1;
-		}
-		if (req4->read() == SC_LOGIC_1) {
-			grant[3] = 1;
-		}
-		if (req5->read() == SC_LOGIC_1) {
-			grant[4] = 1;
-		}*/
-		
+		//log the count from the transmitter into an array
 		switch (name) {
 		case 1:
 			countarray[0] = count;
+			reqarray[0] = 1;
 			break;
 		case 2:
 			countarray[1] = count;
+			reqarray[1] = 1;
 			break;
 		case 3:
 			countarray[2] = count;
+			reqarray[2] = 1;
 			break;
 		case 4:
 			countarray[3] = count;
+			reqarray[3] = 1;
 			break;
 		case 5:
 			countarray[4] = count;
+			reqarray[4] = 1;
 			break;
 		default:
 			cout << "req selection error" << endl;
@@ -118,12 +140,13 @@ void dma::arbiter(int name, int count) {
 		int smallest = countarray[0];
 		int location = 0;
 		for (int i = 1; i < sizeof(countarray) / sizeof(countarray[0]); ++i) {
-			if (countarray[i] < smallest) {
+			if ((countarray[i] < smallest)&&(reqarray[i]==1)) {
 				smallest = countarray[i];
 				location = i;
 			}
 		}
 		cout << "smallest value " << smallest << " at location " << location << " is req # " << location+1 << endl;
+
 		if (grant==0) {
 			switch (location) {
 			case 0:
@@ -133,7 +156,7 @@ void dma::arbiter(int name, int count) {
 				gnt4->write(SC_LOGIC_0);
 				gnt5->write(SC_LOGIC_0);
 				cout << "GNT " << location + 1 << " asserted" << endl;
-				//grant[0] = 1;
+				grant = 1;
 				break;
 			case 1:
 				gnt1->write(SC_LOGIC_0);
@@ -142,7 +165,7 @@ void dma::arbiter(int name, int count) {
 				gnt4->write(SC_LOGIC_0);
 				gnt5->write(SC_LOGIC_0);
 				cout << "GNT " << location + 1 << " asserted" << endl;
-				//grant = 2;
+				grant = 2;
 				break;
 			case 2:
 				gnt1->write(SC_LOGIC_0);
@@ -151,7 +174,7 @@ void dma::arbiter(int name, int count) {
 				gnt4->write(SC_LOGIC_0);
 				gnt5->write(SC_LOGIC_0);
 				cout << "GNT " << location + 1 << " asserted" << endl;
-				//grant = 3;
+				grant = 3;
 				break;
 			case 3:
 				gnt1->write(SC_LOGIC_0);
@@ -160,7 +183,7 @@ void dma::arbiter(int name, int count) {
 				gnt4->write(SC_LOGIC_1);
 				gnt5->write(SC_LOGIC_0);
 				cout << "GNT " << location + 1 << " asserted" << endl;
-			//	grant = 4;
+				grant = 4;
 				break;
 			case 4:
 				gnt1->write(SC_LOGIC_0);
@@ -169,7 +192,7 @@ void dma::arbiter(int name, int count) {
 				gnt4->write(SC_LOGIC_0);
 				gnt5->write(SC_LOGIC_1);
 				cout << "GNT " << location + 1 << " asserted" << endl;
-				//grant = 5;
+				grant = 5;
 				break;
 			default:
 				gnt1->write(SC_LOGIC_0);

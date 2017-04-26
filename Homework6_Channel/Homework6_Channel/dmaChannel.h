@@ -27,5 +27,8 @@ public:
 	//virtual void arbiter(const char * name, int count);
 	virtual void arbiter(int name, int count);
 	int countarray[5] = { 0,0,0,0,0 };
+	int reqarray[5] = { 0,0,0,0,0 };
+	int grant = 0;
+	//int smallest = 128;
 	
 };

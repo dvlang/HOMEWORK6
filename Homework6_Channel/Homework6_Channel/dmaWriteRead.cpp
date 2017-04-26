@@ -51,7 +51,7 @@ void transmitter::writeBlocks()
 			out->burstWrite(start, count, data);
 			//wait(70 * count, SC_NS);
 			cout << "TRANS: return from BURSTWRITE" << endl;
-			while(true){};
+		//	while(true){};
 			cout << "TRANS: At " << sc_time_stamp() << " write start at: "
 				<< start << " count " << count << ", first data: "
 				<< data[0] << '\n';
@@ -60,6 +60,9 @@ void transmitter::writeBlocks()
 			done = true;
 			request->write(SC_LOGIC_0);
 			wait(1, SC_NS);
+			req->arbiter(device, count);	//sending count shouldnt matter, just need to kick the arb
+			wait(1, SC_NS);
+		//	while (true) {};
 		}
 
 	}
