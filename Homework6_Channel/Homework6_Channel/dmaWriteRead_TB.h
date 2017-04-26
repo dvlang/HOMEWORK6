@@ -1,5 +1,5 @@
 #include "dmaWriteRead.h"
-//#include "memory.h"
+#include "memory.h"
 
 SC_MODULE (dmaWriteRead_TB) {
 	sc_signal_rv<16> address_s;
@@ -17,7 +17,7 @@ SC_MODULE (dmaWriteRead_TB) {
 	transmitter* TRS4;
 	transmitter* TRS5;
 	receiver* RCV1;
-	//memory* MEM1;
+	memory* MEM1;
 
 	SC_CTOR(dmaWriteRead_TB) {
 		DMA1 = new dma("DMA_Channel");
@@ -72,11 +72,11 @@ SC_MODULE (dmaWriteRead_TB) {
 
 		RCV1 = new receiver("Receiver");
 			RCV1->in(*DMA1);
-		/*MEM1 = new memory("Memory");
+		MEM1 = new memory("Memory");
 			MEM1->address_p(address_s);
 			MEM1->data_p(data_s);
 			MEM1->rw_p(rw_s);
-*/
+
 
 			
 	}

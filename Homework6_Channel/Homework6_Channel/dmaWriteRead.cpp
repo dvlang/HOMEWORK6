@@ -45,7 +45,9 @@ void transmitter::writeBlocks()
 		if (gnt->read() == SC_LOGIC_1) {
 			cout << "trans_wb: " << name << " Got a GRANT!" << endl;
 			out->burstWrite(start, count, data);
+			//wait(70 * count, SC_NS);
 			cout << "return from BURSTWRITE" << endl;
+			while(true){};
 			cout << "TRANS: At " << sc_time_stamp() << " write start at: "
 				<< start << " count " << count << ", first data: "
 				<< data[0] << '\n';

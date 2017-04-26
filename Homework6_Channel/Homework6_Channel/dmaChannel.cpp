@@ -4,7 +4,7 @@ void dma::burstWrite( int dstAddr, int count, sc_lv<8> *data ) {
 	sc_lv<8> *ite = data;
 	cout << "pump them bytes!" << endl;
 	cout << "At " << sc_time_stamp() << "count is " << count << endl;
-
+	cout << "Count" << sc_time_stamp() << "count is " << count << endl;
 	for (int i=0; i<count; i++) {
 		address_p->write(dstAddr++);
 		data_p->write( *(ite++) );
@@ -18,8 +18,9 @@ void dma::burstWrite( int dstAddr, int count, sc_lv<8> *data ) {
 		data_p->write("ZZZZZZZZ");
 
 		wait(10, SC_NS);
+		cout << "burstwrite i: "<<i << endl;
 	}
-
+	cout << "finished burst" << endl;
 
 }
 
