@@ -12,13 +12,14 @@ void transmitter::writeBlocks()
 
 	srand(device*(unsigned)time(NULL));
 
-	//for(i=0; i<=1; i++) {	//this loop looks like it will control how many times this will run set i (orig 3)
+
 		while(true){
-		//cout << "Device: " << device << " at " << sc_time_stamp() << " is idle ...\n";
-		//cout << "Device: " << device << " delay " << delay << endl;
+
 		wait(delay * 30, SC_NS);
-		cout << "Trans: Device " << device<< endl;
-		//cout << "Device: " << device << " at " << sc_time_stamp() << " has requested ...\n";
+
+		//		cout << "TRS: Device " << device<< endl;
+
+
 		//fills buffer with rando data
 		//start=100*(i+1);
 		start = 100;
@@ -27,7 +28,7 @@ void transmitter::writeBlocks()
 			done = false;
 			srand(device*(unsigned)time(NULL));
 			count = 1 + (rand() % 128);
-			cout << "trans: count updatelp; Device " << device << " count is " << count << endl;
+			//cout << "trans: count updatelp; Device " << device << " count is " << count << endl;
 			for (j = 0; j < count; j++) {
 				data[j] = start * 100 + j;
 			}
@@ -41,30 +42,28 @@ void transmitter::writeBlocks()
 			wait(1, SC_NS);
 
 		}
-			//req->arbiter(name, count);
+
 			req->arbiter(device, count);
+			wait(10, SC_NS);
+			cout << "TRS: " << device << " Sent request to send "<< count << " bytes at " << sc_time_stamp() << endl;
 			wait(1, SC_NS);
-			cout << "trans_wb: " << device << " Sent a request at " << sc_time_stamp() << endl;
-			wait(1, SC_NS);
-		//}
+
 		
 		if (gnt->read() == SC_LOGIC_1) {
-			cout << "trans_wb: " << device << " Got a GRANT!" << endl;
+			cout << "TRS: " << device << " Got a GRANT!" << endl;
 			out->burstWrite(start, count, data);
 
-			cout << "trans_wb: " << device << "Return from BURSTWRITE" << endl;
+			cout << "TRS: " << device << " return from BURSTWRITE()" << endl;
 
-			/*cout << "TRANS: At " << sc_time_stamp() << " write start at: "
-				<< start << " count " << count << ", first data: "
-				<< data[0] << '\n';*/
+
 		
 			wait(1, SC_NS);
 			done = true;
 			request->write(SC_LOGIC_0);
 			wait(1, SC_NS);
  			req->arbiter(device, count);	//sending count shouldnt matter, just need to kick the arb
-			wait(1, SC_NS);
-		//	while (true) {};
+			wait(10, SC_NS);
+
 		}
 
 	}
