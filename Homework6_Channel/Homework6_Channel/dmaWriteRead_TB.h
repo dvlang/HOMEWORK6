@@ -22,12 +22,9 @@ SC_MODULE (dmaWriteRead_TB) {
 	SC_CTOR(dmaWriteRead_TB) {
 		DMA1 = new dma("DMA_Channel");
 			DMA1->address_p(address_s);
-			//NEW
+
 			DMA1->data_p(data_s);
-			//DMA1->data_p2(data_s2);
-			//DMA1->data_p3(data_s3);
-			//DMA1->data_p4(data_s4);
-		//	DMA1->data_p5(data_s5);
+
 			DMA1->gnt1(gnt1);
 			DMA1->gnt2(gnt2);
 			DMA1->gnt3(gnt3);
@@ -38,7 +35,7 @@ SC_MODULE (dmaWriteRead_TB) {
 			DMA1->req3(req3);
 			DMA1->req4(req4);
 			DMA1->req5(req5);
-			//END NEW
+
 			DMA1->rw_p(rw_s);
 		TRS1 = new transmitter("T1",1,4);
 			TRS1->out(*DMA1);
@@ -80,6 +77,6 @@ SC_MODULE (dmaWriteRead_TB) {
 
 			
 	}
-	//void monitor 
+
 };
 

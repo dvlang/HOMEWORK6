@@ -83,7 +83,7 @@ void dma::arbiter(int name, int count) {
 		//clear the previous transmitter's grant permission
 		if ((req1->read() == SC_LOGIC_0) && (grant == 1)) {
 			grant = 0;
-			//gnt1->write(SC_LOGIC_0);
+
 			skipgrant = true;
 			reqarray[0] = 0;
 			cout << "ARB: clear grant 1 at " << sc_time_stamp() << endl;
@@ -91,28 +91,28 @@ void dma::arbiter(int name, int count) {
 		}
 		else if ((req2->read() == SC_LOGIC_0) && (grant == 2)) {
 			grant = 0;
-			//gnt2->write(SC_LOGIC_0);
+
 			skipgrant = true;
 			reqarray[1] = 0;
 			cout << "ARB: clear grant 2 at " << sc_time_stamp() << endl;
 		}
 		else if ((req3->read() == SC_LOGIC_0) && (grant == 3)) {
 			grant = 0;
-		//	gnt3->write(SC_LOGIC_0);
+
 			skipgrant = true;
 			reqarray[2] = 0;
 			cout << "ARB: clear grant 3 at " << sc_time_stamp() << endl;
 		}
 		else if ((req4->read() == SC_LOGIC_0) && (grant == 4)) {
 			grant = 0;
-		//	gnt4->write(SC_LOGIC_0);
+
 			skipgrant = true;
 			reqarray[3] = 0;
 			cout << "ARB: clear grant 4 at " << sc_time_stamp() << endl;
 		}
 		else if ((req5->read() == SC_LOGIC_0) && (grant == 5)) {
 			grant = 0;
-			//gnt5->write(SC_LOGIC_0);
+
 			skipgrant = true;
 			reqarray[4] = 0;
 			cout << "ARB: clear grant 5 at " << sc_time_stamp() << endl;
@@ -192,12 +192,7 @@ void dma::arbiter(int name, int count) {
 					grant = 5;
 					break;
 				default:
-					/*gnt1->write(SC_LOGIC_0);
-					gnt2->write(SC_LOGIC_0);
-					gnt3->write(SC_LOGIC_0);
-					gnt4->write(SC_LOGIC_0);
-					gnt5->write(SC_LOGIC_0);
-					grant = 0;*/
+
 					break;
 				}
 			}
@@ -237,11 +232,7 @@ void dma::arbiter(int name, int count) {
 				gnt5->write(SC_LOGIC_1);
 			}
 			else {
-				/*	gnt1->write(SC_LOGIC_0);
-					gnt2->write(SC_LOGIC_0);
-					gnt3->write(SC_LOGIC_0);
-					gnt4->write(SC_LOGIC_0);
-					gnt5->write(SC_LOGIC_0);*/
+
 			}
 
 	/*		cout << "ARB: grant 1 is " << gnt1->read() << endl;

@@ -8,9 +8,7 @@ SC_MODULE (transmitter) {
 	sc_port<dma_arb_if> req;
 
 
-	//sc_out_resolved req;
 
-	//SC_CTOR (transmitter)
 	SC_HAS_PROCESS(transmitter);
 
 	transmitter::transmitter(sc_module_name NAME, int NUM, int TIM) : sc_module(NAME), device(NUM), delay(TIM)
