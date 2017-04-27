@@ -20,12 +20,12 @@ void dma::burstWrite( int dstAddr, int count, sc_lv<8> *data ) {
 		wait(10, SC_NS);
 		//cout << "MEM: burstwrite() i: "<<i << endl;
 	}
-	cout << "MEM: finished burstwrite at " << sc_time_stamp() << endl;
+	cout << "MEM: finished burstwrite of " <<count <<" bytes at " << sc_time_stamp() << endl;
 
 }
 
 void dma::burstRead(int srcAddr, int count, sc_lv<8>* data) {
-
+/*
 	for (int i=0; i<count; i++) {
 		address_p->write(srcAddr++);
 		wait(10, SC_NS);
@@ -41,7 +41,7 @@ void dma::burstRead(int srcAddr, int count, sc_lv<8>* data) {
 		address_p->write("ZZZZZZZZZZZZZZZZ");
 		data_p->write("ZZZZZZZZ");
 		wait(10, SC_NS);
-   }
+   }*/
 }
 
 //void dma::arbiter(const char * name, int count) {
@@ -51,7 +51,7 @@ void dma::arbiter(int name, int count) {
 
 //	cout << "ARB: request from: " << name << endl;
 //		cout << "ARB_req_ary: " << req1->read()<< " " << req2->read() << " " << req3->read() << " " << req4->read() << " " << req5->read() << endl;
-//		cout << "ARB_cur_gnt: " << grant << endl;
+		cout << "ARB: Current Device w/ grant " << grant << endl;
 		
 		//log the count from the transmitter into an array
 		switch (name) {
@@ -86,7 +86,7 @@ void dma::arbiter(int name, int count) {
 			//gnt1->write(SC_LOGIC_0);
 			skipgrant = true;
 			reqarray[0] = 0;
-			cout << "ARB: clear grant 1" << endl;
+			cout << "ARB: clear grant 1 at " << sc_time_stamp() << endl;
 
 		}
 		else if ((req2->read() == SC_LOGIC_0) && (grant == 2)) {
@@ -94,28 +94,28 @@ void dma::arbiter(int name, int count) {
 			//gnt2->write(SC_LOGIC_0);
 			skipgrant = true;
 			reqarray[1] = 0;
-			cout << "ARB: clear grant 2" << endl;
+			cout << "ARB: clear grant 2 at " << sc_time_stamp() << endl;
 		}
 		else if ((req3->read() == SC_LOGIC_0) && (grant == 3)) {
 			grant = 0;
 		//	gnt3->write(SC_LOGIC_0);
 			skipgrant = true;
 			reqarray[2] = 0;
-			cout << "ARB: clear grant 3" << endl;
+			cout << "ARB: clear grant 3 at " << sc_time_stamp() << endl;
 		}
 		else if ((req4->read() == SC_LOGIC_0) && (grant == 4)) {
 			grant = 0;
 		//	gnt4->write(SC_LOGIC_0);
 			skipgrant = true;
 			reqarray[3] = 0;
-			cout << "ARB: clear grant 4" << endl;
+			cout << "ARB: clear grant 4 at " << sc_time_stamp() << endl;
 		}
 		else if ((req5->read() == SC_LOGIC_0) && (grant == 5)) {
 			grant = 0;
 			//gnt5->write(SC_LOGIC_0);
 			skipgrant = true;
 			reqarray[4] = 0;
-			cout << "ARB: clear grant 5" << endl;
+			cout << "ARB: clear grant 5 at " << sc_time_stamp() << endl;
 		}
 		else {
 			grant = grant;
@@ -152,7 +152,7 @@ void dma::arbiter(int name, int count) {
 					gnt3->write(SC_LOGIC_0);
 					gnt4->write(SC_LOGIC_0);
 					gnt5->write(SC_LOGIC_0);
-					cout << "ARB: GNT " << location + 1 << " asserted" << endl;
+					cout << "ARB: GNT " << location + 1 << " asserted at " << sc_time_stamp() << endl;
 					grant = 1;
 					break;
 				case 1:
@@ -161,7 +161,7 @@ void dma::arbiter(int name, int count) {
 					gnt3->write(SC_LOGIC_0);
 					gnt4->write(SC_LOGIC_0);
 					gnt5->write(SC_LOGIC_0);
-					cout << "ARB: GNT " << location + 1 << " asserted" << endl;
+					cout << "ARB: GNT " << location + 1 << " asserted at " << sc_time_stamp() << endl;
 					grant = 2;
 					break;
 				case 2:
@@ -170,7 +170,7 @@ void dma::arbiter(int name, int count) {
 					gnt3->write(SC_LOGIC_1);
 					gnt4->write(SC_LOGIC_0);
 					gnt5->write(SC_LOGIC_0);
-					cout << "ARB: GNT " << location + 1 << " asserted" << endl;
+					cout << "ARB: GNT " << location + 1 << " asserted at " << sc_time_stamp() << endl;
 					grant = 3;
 					break;
 				case 3:
@@ -179,7 +179,7 @@ void dma::arbiter(int name, int count) {
 					gnt3->write(SC_LOGIC_0);
 					gnt4->write(SC_LOGIC_1);
 					gnt5->write(SC_LOGIC_0);
-					cout << "ARB: GNT " << location + 1 << " asserted" << endl;
+					cout << "ARB: GNT " << location + 1 << " asserted at " << sc_time_stamp() << endl;
 					grant = 4;
 					break;
 				case 4:
@@ -188,7 +188,7 @@ void dma::arbiter(int name, int count) {
 					gnt3->write(SC_LOGIC_0);
 					gnt4->write(SC_LOGIC_0);
 					gnt5->write(SC_LOGIC_1);
-					cout << "ARB: GNT " << location + 1 << " asserted" << endl;
+					cout << "ARB: GNT " << location + 1 << " asserted at " << sc_time_stamp() << endl;
 					grant = 5;
 					break;
 				default:
